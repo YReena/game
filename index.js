@@ -49,14 +49,14 @@ const locations = [{
     "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
     "button functions": [restart, restart, restart],
     text: "You die."
-},{
+}, {
     name: "win",
     "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
     "button functions": [restart, restart, restart],
     text: "You defeat the dragon! YOU WIN THE GAME"
-},{
+}, {
     name: "easter egg",
-    "button text": ["2","8","Go to town square?"],
+    "button text": ["2", "8", "Go to town square?"],
     "button functions": [pickTwo, pickEight, goTown],
     text: "you find a secret game. Pick a number above. Ten numbers will be randomly chosen 0 and 10. If the number you choose matches one ofthe random numbers, you win!"
 }
@@ -64,10 +64,10 @@ const locations = [{
 
 button1.onclick = goStore;
 button2.onclick = goCave;
-button3.onclick = fightDragon
+button3.onclick = fightDragon;
 
 function update(location) {
-    //monsterStats.style.display = "none";
+    monsterStats.style.display = "none";
     button1.innerText = location["button text"][0];
     button2.innerText = location["button text"][1];
     button3.innerText = location["button text"][2];
@@ -76,19 +76,14 @@ function update(location) {
     button3.onclick = location["button functions"][2];
     text.innerText = location.text;
 }
-
-function goStore() {
+function goTown() {
     update(locations[0]);
-    console.log("reena");
 }
-function goCave() {
+function goStore() {
     update(locations[1]);
 }
-function fightDragon() {
+function goCave() {
     update(locations[2]);
-}
-function buyHealth (){
-
 }
 
 function buyHealth() {
@@ -122,15 +117,14 @@ function BuyWeapon() {
         button2.innerText = "Sell weapon for 15 gold";
         button2.onclick = sellWeapon;
     }
-
 }
 function sellWeapon() {
-    if (inventory.length > 1) {
+    if (inventory.length > 1){
         gold += 15;
         goldText.innerText = gold;
         let currentWeapon = inventory.shift();
         text.innerText = "you sold a" + currentWeapon + "."
-        text.innerText += "In your inventory you have: " + inventory;
+        text.innerText += "In your inventory you have:"+ inventory;
     } else {
         text.innerText = "Don't sell your only weapon!";
     }
@@ -150,25 +144,23 @@ function fightDragon() {
     fighting = 2;
     goFight();
 }
-function goTown(){
 
-}
 function goFight() {
     update(locations[3]);
     monsterHealth = monsters[fighting].health;
-    monsterStats.computedStyleMap.display = "block";
+    monsterStats.style.display = "block";
     monsterNameText.innerText = monsters[fighting].name;
     monsterHealthText.innerText = monsterHealth;
 }
 function attack() {
     text.innerText = "The" + monsters[fighting].name + "attacks.";
     text.innerText += "You attack it with your" + weapons[currentWeapon].name + ".";
-    if(isMonstorHit()){
+    if (isMonstorHit()) {
         health -= getMonsterAttackValue(monsters[fighting].level);
-    }else{
+    } else {
         text.innerText += "you miss.";
     }
-   
+
     monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
     healthText.innerText = health;
     monsterHealthText.innerText = monsterHealth;
@@ -176,20 +168,20 @@ function attack() {
         lose();
     }
     else if (monsterHealth <= 0) {
-        fighting === 2 ?winGame():defeatMonster();
+        fighting === 2 ? winGame():defeatMonster();
     }
-    if(Math.random()<=.1 && inventory.length !=1){
-     text.innerText += "your"+ inventory.pop()+"breaks.";
-     currentWeapon--;
+    if (Math.random() <= .1 && inventory.length !== 1) {
+        text.innerText += "your" + inventory.pop() + "breaks.";
+        currentWeapon--;
     }
 }
-function getMonsterAttackValue(level){
-    let hit = (level*5) - (Math.floor(Math.random()*xp));
+function getMonsterAttackValue(level) {
+    let hit = (level * 5) - (Math.floor(Math.random() * xp));
     console.log(hit);
     return hit;
 }
-function isMonstorHit(){
-    return Math.random()>.2 && health < 20;
+function isMonstorHit() {
+    return Math.random() > .2 || health < 20;
 }
 function dodge() {
     text.innerText = "You dodge the attack from the" + monsters[fighting].name + ".";
@@ -221,37 +213,37 @@ function restart() {
     goTown();
 }
 
-function easterEgg (){
+function easterEgg() {
     update(location[7]);
 }
 
-function pickTwo (){
+function pickTwo() {
     pickTwo(2);
 
 }
-function pickEight (){
+function pickEight() {
     pickTwo(8);
-    
+
 }
-function pick(guess){
-    let numbers =[];
-    while(numbers.length <10){
-        numbers.push(Math.floor(Math.random()*11))
+function pick(guess) {
+    let numbers = [];
+    while (numbers.length < 10) {
+        numbers.push(Math.floor(Math.random() * 11));
     }
-    
-    text.innerText = "You picked"+ guess + ".Here are the random numbers:\n";
-    for(let i=0;i<10;i++){
-        text.innerText += numbers[i]+"\n";
+
+    text.innerText = "You picked" + guess + ".Here are the random numbers:\n";
+    for (let i = 0; i < 10; i++) {
+        text.innerText += numbers[i] + "\n";
     }
-    if(numbers.indexOf(guess) !== -1){
-       text.innerText += "Right! you won 20 gold!";
-       gold += 20;
-       goldText.innerText = gold;
-    }else {
+    if (numbers.indexOf(guess) !== -1) {
+        text.innerText += "Right! you won 20 gold!";
+        gold += 20;
+        goldText.innerText = gold;
+    } else {
         text.innerText += "Wrong! You lose 10 health";
         health -= 10;
         healthText.innerText = health;
-        if(health <= 0){
+        if (health <= 0) {
             lose();
         }
     }

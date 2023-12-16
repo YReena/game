@@ -13,7 +13,7 @@ body{
     width: 50%;
     height: 400px;
 }
-.stats{
+#stats{
     border: 2px solid black;
     display: flex;
     gap: 5rem;
@@ -22,11 +22,11 @@ body{
     padding: 5px 5px;
     margin: 5px;
 }
-.stat{
+#stat{
     display: inline-block;
  
 }
-.controls{
+#controls{
     border: 2px solid black;
 }
  #button1{
@@ -47,7 +47,7 @@ body{
     border-radius: 5px;
     margin: 5px;
 }
-.text{
+#text{
     height:75%;
     width: 95%;
     color: white;
@@ -56,7 +56,6 @@ body{
     background-color: black;
 }
 #monsterStats {
-    display : none;
     border: 1px solid solid;
     color: white;
     padding: 5px;
